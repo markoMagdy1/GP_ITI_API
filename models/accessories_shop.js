@@ -1,6 +1,7 @@
 const mongoose=require("mongoose");
 
 const accesShopSchema=new mongoose.Schema({
+    image:String,
     id:Number,
     name:String,
     password:String,
