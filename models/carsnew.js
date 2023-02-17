@@ -1,6 +1,7 @@
 const mongoose=require("mongoose");
 
 const carsnewSchema=new mongoose.Schema({
+    image: Array,
     id:Number,
     name:String,
     model:String,

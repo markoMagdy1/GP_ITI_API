@@ -1,6 +1,7 @@
 const mongoose=require("mongoose");
 
 const maintainSchema=new mongoose.Schema({
+    image:String,
     id:Number,
     name:String,
     location:String,

@@ -2,6 +2,8 @@ const express=require("express");
 const router=express.Router();
 const schoolsModel=require("../models/schools")
 router.use(express.json());
+const upload=require("../middleware/multer");
+
 
 function checkError(err, response){
     if(!err) return res.json(response);
@@ -26,16 +28,39 @@ router.get("/:id",async (req,res)=>{
         
     }
 });
-
-router.post("/",async(req,res)=>{
-    const newPost=await schoolsModel(req.body);
+router.post("/", upload.single("image"), async (req, res) => {
+    const { file } = req;
+    const newPost = await schoolsModel({
+      image: file.filename,
+      name: req.body.name,
+      phone: req.body.phone,
+      email: req.body.email,
+      id: req.body.id,
+      location: req.body.location,
+      price: req.body.price,
+    });
     try {
-        newPost.save();
-        res.json(newPost);
+      newPost.save();
+      res.json({
+        newPost,
+        file: file,
+        path: file.originalname,
+      });
     } catch (error) {
-        res.json(error);   
+      res.json(error);
     }
-});
+  });
+  
+
+// router.post("/",async(req,res)=>{
+//     const newPost=await schoolsModel(req.body);
+//     try {
+//         newPost.save();
+//         res.json(newPost);
+//     } catch (error) {
+//         res.json(error);   
+//     }
+// });
 
 router.put("/:id",async(req,res)=>{
 try {

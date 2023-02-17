@@ -2,6 +2,7 @@ const express=require("express");
 const router=express.Router();
 const carsUsedModel=require("../models/carsused")
 router.use(express.json());
+const upload=require("../middleware/multer");
 
 router.get("/",async(req,res)=>{
     try {
@@ -21,16 +22,44 @@ router.get("/:id",async (req,res)=>{
         
     }
 });
-
-router.post("/",async(req,res)=>{
-    const newPost=await carsUsedModel(req.body);
+router.post("/", upload.array("image",12), async (req, res) => {
+    const { files } = req;
+    const  images = files.map(e => 
+      e.filename 
+    );
+    const newPost = await carsUsedModel({
+      image: images,
+      id: req.body.id,
+      name: req.body.name,
+      model: req.body.model,
+      price: req.body.price,
+      transmission: req.body.transmission,
+      motor: req.body.motor,
+      color: req.body.color,
+      year: req.body.year,
+      distance: req.body.distance,
+    });
     try {
-        newPost.save();
-        res.json(newPost);
+      newPost.save();
+      res.json({
+        newPost,
+        files: files,
+        path: files.originalname,
+      });
     } catch (error) {
-        res.json(error);   
+      res.json(error);
     }
-});
+  });
+
+// router.post("/",async(req,res)=>{
+//     const newPost=await carsUsedModel(req.body);
+//     try {
+//         newPost.save();
+//         res.json(newPost);
+//     } catch (error) {
+//         res.json(error);   
+//     }
+// });
 
 router.put("/:id",async(req,res)=>{
 try {
