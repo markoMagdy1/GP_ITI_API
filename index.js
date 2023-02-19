@@ -1,10 +1,9 @@
 const express=require("express");
 const mongoose=require("mongoose");
 const morgan=require("morgan");
-const PORT =6000;
+const PORT =5000;
 const app=express(); 
-
-app.use(morgan("tiny"));
+app.use('/',express.static('images'))
 
 const usersRouter=require("./routes/user");
 const adminRouter=require("./routes/admin");

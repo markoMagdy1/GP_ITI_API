@@ -2,7 +2,6 @@ const mongoose=require("mongoose");
 
 const carsUsedSchema=new mongoose.Schema({
     image:Array,
-    id:Number,
     name:String,
     model:String,
     price:Number,
@@ -11,9 +10,6 @@ const carsUsedSchema=new mongoose.Schema({
     color:String,
     year:Number,
     distance:Number,
-  
-
-
     owner:{type:mongoose.Schema.Types.ObjectId , ref:"carsshop"}
 })
 

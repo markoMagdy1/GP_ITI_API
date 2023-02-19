@@ -29,7 +29,6 @@ router.post("/", upload.array("image",12), async (req, res) => {
     );
     const newPost = await carsUsedModel({
       image: images,
-      id: req.body.id,
       name: req.body.name,
       model: req.body.model,
       price: req.body.price,
@@ -38,6 +37,7 @@ router.post("/", upload.array("image",12), async (req, res) => {
       color: req.body.color,
       year: req.body.year,
       distance: req.body.distance,
+      owner:req.body.owner
     });
     try {
       newPost.save();

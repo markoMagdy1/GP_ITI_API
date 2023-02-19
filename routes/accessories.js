@@ -39,7 +39,8 @@ router.post("/", upload.array("image",12), async (req, res) => {
       price: req.body.price,
       color: req.body.color,
       desc: req.body.desc,
-      isExternal:req.body.isExternal
+      isExternal:req.body.isExternal,
+      owner:req.body.owner
     });
     try {
       newPost.save();
@@ -53,15 +54,6 @@ router.post("/", upload.array("image",12), async (req, res) => {
     }
   });
 
-// router.post("/",async(req,res)=>{
-//     const newPost=await accessModel(req.body);
-//     try {
-//         newPost.save();
-//         res.json(newPost);
-//     } catch (error) {
-//         res.json(error);   
-//     }
-// });
 
 router.put("/:id",async(req,res)=>{
 try {
